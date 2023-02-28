@@ -106,7 +106,7 @@ class DataModelFieldBase(_BaseModel):
             self.data_type.all_imports
         ]
         if (
-            self.nullable or (self.nullable is None and not self.required)
+                self.nullable or (self.nullable is None and not self.required)
         ) and not self.data_type.use_union_operator:
             imports.append((IMPORT_OPTIONAL,))
         if self.use_annotated:
@@ -198,20 +198,20 @@ class DataModel(TemplateBase, Nullable, ABC):
     DEFAULT_IMPORTS: ClassVar[Tuple[Import, ...]] = ()
 
     def __init__(
-        self,
-        *,
-        reference: Reference,
-        fields: List[DataModelFieldBase],
-        decorators: Optional[List[str]] = None,
-        base_classes: Optional[List[Reference]] = None,
-        custom_base_class: Optional[str] = None,
-        custom_template_dir: Optional[Path] = None,
-        extra_template_data: Optional[DefaultDict[str, Dict[str, Any]]] = None,
-        methods: Optional[List[str]] = None,
-        path: Optional[Path] = None,
-        description: Optional[str] = None,
-        default: Any = UNDEFINED,
-        nullable: bool = False,
+            self,
+            *,
+            reference: Reference,
+            fields: List[DataModelFieldBase],
+            decorators: Optional[List[str]] = None,
+            base_classes: Optional[List[Reference]] = None,
+            custom_base_class: Optional[str] = None,
+            custom_template_dir: Optional[Path] = None,
+            extra_template_data: Optional[DefaultDict[str, Dict[str, Any]]] = None,
+            methods: Optional[List[str]] = None,
+            path: Optional[Path] = None,
+            description: Optional[str] = None,
+            default: Any = UNDEFINED,
+            nullable: bool = False,
     ) -> None:
         if not self.TEMPLATE_FILE_PATH:
             raise Exception('TEMPLATE_FILE_PATH is undefined')
@@ -238,7 +238,8 @@ class DataModel(TemplateBase, Nullable, ABC):
             else defaultdict(dict)
         )
 
-        self.fields = self._validate_fields(fields) if fields else []
+        # self.fields = self._validate_fields(fields) if fields else []
+        self.fields = fields or []
 
         for base_class in self.base_classes:
             if base_class.reference:
@@ -260,7 +261,7 @@ class DataModel(TemplateBase, Nullable, ABC):
         self._nullable: bool = nullable
 
     def _validate_fields(
-        self, fields: List[DataModelFieldBase]
+            self, fields: List[DataModelFieldBase]
     ) -> List[DataModelFieldBase]:
         names: Set[str] = set()
         unique_fields: List[DataModelFieldBase] = []
